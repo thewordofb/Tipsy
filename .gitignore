@@ -204,6 +204,9 @@ csx/
 ecf/
 rcf/
 
+#private data
+*.csv
+
 # Windows Store app package directories and files
 AppPackages/
 BundleArtifacts/

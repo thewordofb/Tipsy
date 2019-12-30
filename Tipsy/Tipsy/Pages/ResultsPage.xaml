@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="Tipsy.Pages.ResultsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tipsy.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:tipsy="using:Tipsy"
+    xmlns:pageControls="using:Tipsy.Pages.Controls"
+    mc:Ignorable="d"
+    xmlns:Windows10FallCreatorsUpdate="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 5)"
+    xmlns:contract5NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,5)">
+
+    <Grid x:Name="MainGrid" x:FieldModifier="public" contract5NotPresent:Background="{StaticResource RoseBrush}" Windows10FallCreatorsUpdate:Background="{StaticResource RoseAcrylicBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ResultSplitView.DisplayMode" Value="Inline"/>
+                        <Setter Target="ResultSplitView.IsPaneOpen" Value="True" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+            <Border Grid.Row="0" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                <!--<Button Content="&#xE26C;" Style="{StaticResource NavigationBackButtonStyle}" Foreground="{StaticResource TextFontBrush}" x:Name="BackButton" Click="BackButton_Click"/>
+                <Button Content="&#xE700;" Style="{StaticResource NavigationBackButtonStyle}" Foreground="{StaticResource TextFontBrush}" x:Name="SplitViewButton" Click="SplitViewButton_Click"/>-->
+                <TextBlock Margin="8,0,0,0" Text="Drinks" Style="{StaticResource HeaderTextBlockStyle}" Foreground="{StaticResource TextFontBrush}" FontSize="60" FontFamily="ms-appx:/Assets/RemachineScript_Personal_Use.ttf#Remachine Script Personal Use" />
+            </StackPanel>
+            </Border>
+
+
+        <SplitView x:Name="ResultSplitView" IsPaneOpen="True"
+                       DisplayMode="Overlay"
+                       OpenPaneLength="260"
+                       Grid.Row="1"
+                        contract5NotPresent:PaneBackground="{StaticResource RoseBrush}" Windows10FallCreatorsUpdate:PaneBackground="{StaticResource RoseAcrylicBrush}">
+            <SplitView.Pane>
+                <pageControls:DrinkListControl Drinks="{Binding Path=Drinks, Mode=OneWay}" Margin="0,0,5,0" x:Name="DrinkList" Grid.Column="0" />
+            </SplitView.Pane>
+            <pageControls:DrinkViewControl Drink="{Binding ElementName=DrinkList, Path=SelectedDrink}" Margin="10,0" Grid.Column="1" />
+        </SplitView>
+
+    </Grid>
+</Page>

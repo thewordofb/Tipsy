@@ -1,0 +1,106 @@
+﻿<UserControl
+    x:Class="Tipsy.Pages.Controls.DrinkListControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Tipsy.Pages.Controls"
+    xmlns:tipsy="using:Tipsy"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <converters:BoolToObjectConverter x:Key="BoolToVisibilityConverter"
+
+                                          FalseValue="Collapsed"
+
+                                          TrueValue="Visible" />
+        <DataTemplate x:Key="DrinkListItemTemplate" x:DataType="tipsy:Drink">
+            <controls:SlidableListItem 
+                    HorizontalAlignment="Stretch"
+                    LeftIcon="Favorite" 
+                    RightIcon="Delete" 
+                    LeftLabel="Set Favorite" 
+                    RightLabel="Delete"
+                    LeftBackground="{StaticResource JewelBrush}" 
+                    RightBackground="OrangeRed"
+                    LeftForeground ="White" 
+                    RightForeground ="White"
+                    ActivationWidth="50"
+                    IsLeftCommandEnabled="True"
+                    IsRightCommandEnabled="False"
+                    IsOffsetLimited="True"
+                    MouseSlidingEnabled="True"
+                    IsPointerReleasedOnSwipingHandled="False"
+                    LeftCommand="{x:Bind ToggleFavoriteCommand}">
+
+                <Grid Height="70"
+                      Background="LightGray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="Checkmark"
+                          Background="{StaticResource JewelBrush}"
+                          Visibility="{x:Bind Favorite, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <SymbolIcon Foreground="White"
+                                    Symbol="Favorite" />
+                    </Grid>
+
+                    <TextBlock Grid.Column="1"
+                               Margin="12"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Light"
+                               Style="{StaticResource CaptionTextBlockStyle}"
+                               Text="{x:Bind Name}"
+                               TextWrapping="NoWrap" />
+                </Grid>
+            </controls:SlidableListItem>
+        </DataTemplate>
+        </UserControl.Resources>
+
+        <Grid>
+        <ListView Name="listView" ItemsSource="{Binding Path=Drinks, Mode=OneWay}" ItemTemplate="{StaticResource DrinkListItemTemplate}" SelectionChanged="listView_SelectionChanged">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0,0,16,0" />
+                    <Setter Property="Padding" Value="4,4,4,4" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <ListViewItemPresenter
+                                  ContentTransitions="{TemplateBinding ContentTransitions}"
+                                  SelectionCheckMarkVisualEnabled="True"
+                                  CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                  CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                                  DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                                  DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                                  FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+                                  FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                                  PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                                  PointerOverBackground="{StaticResource AmethystBrush}"
+                                  PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
+                                  SelectedBackground="{StaticResource AmethystBrush}"
+                                  SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}"
+                                  SelectedPointerOverBackground="{StaticResource AmethystBrush}"
+                                  PressedBackground="{StaticResource AmethystBrush}"
+                                  SelectedPressedBackground="{StaticResource AmethystBrush}"
+                                  DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                  DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                  ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  ContentMargin="{TemplateBinding Padding}"
+                                  CheckMode="Inline"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </Grid>
+</UserControl>
